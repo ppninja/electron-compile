@@ -346,6 +346,11 @@ export default class CompilerHost {
 
     d(`Using compiler options: ${JSON.stringify(compiler.compilerOptions)}`);
     let result = await compiler.compile(code, filePath, ctx);
+    
+    if (result.dependentFiles) {
+      dependentFiles = result.dependentFiles;
+      delete result.dependentFiles;
+    }  
 
     let shouldInlineHtmlify =
       inputMimeType !== 'text/html' &&
